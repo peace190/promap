@@ -1,4 +1,4 @@
-const CACHE_NAME = 'promap-v2';
+const CACHE_NAME = 'promap-v3';
 const ASSETS = [
   './',
   './index.html',

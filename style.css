@@ -202,3 +202,20 @@ body, html {
   z-index: 999;
   max-width: 45vw; /* Keeps it compact on mobile screens */
 }
+
+
+.install-pwa-btn {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  background-color: #2563eb;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+}

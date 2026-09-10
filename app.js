@@ -216,3 +216,31 @@ function updatePhoneNotificationBar(instruction, street) {
 }
 
 trackPosition();
+
+// ... All your map, routing, and location tracking code ...
+
+// ==========================================
+// PWA INSTALL PROMPT BANNER
+// ==========================================
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  const installBtn = document.createElement('button');
+  installBtn.innerText = '📲 Download / Install App';
+  installBtn.className = 'install-pwa-btn';
+  document.body.appendChild(installBtn);
+
+  installBtn.addEventListener('click', () => {
+    installBtn.style.display = 'none';
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User installed the PWA');
+      }
+      deferredPrompt = null;
+    });
+  });
+});
