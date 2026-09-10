@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pro Global Map & Navigation</title>
+
+  <!-- Leaflet & Plugin CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <!-- PWA & Mobile Status Bar Configuration -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Map Canvas -->
+  <div id="map"></div>
+
+  <!-- Tier 1: Top Transport Mode Selector -->
+  <div id="transport-selector" class="transport-card mode-selector">
+    <div class="mode-btn active" data-speed="40" data-mode="Car"><i class="fa-solid fa-car"></i><span>Car</span></div>
+    <div class="mode-btn" data-speed="25" data-mode="Keke"><i class="fa-solid fa-motorcycle"></i><span>Keke</span></div>
+    <div class="mode-btn" data-speed="30" data-mode="Bus"><i class="fa-solid fa-bus"></i><span>Bus</span></div>
+    <div class="mode-btn" data-speed="15" data-mode="Bike"><i class="fa-solid fa-bicycle"></i><span>Bike</span></div>
+    <div class="mode-btn" data-speed="20" data-mode="Truck"><i class="fa-solid fa-truck"></i><span>Truck</span></div>
+    <div class="mode-btn" data-speed="5" data-mode="Leg"><i class="fa-solid fa-person-walking"></i><span>Leg</span></div>
+  </div>
+
+  <!-- Tier 3: Location Card -->
+  <div id="address-card" class="location-card">
+    <div class="loc-icon"><i class="fa-solid fa-location-dot"></i></div>
+    <div class="loc-details">
+      <div id="street-name" class="primary-text">Locating...</div>
+      <div id="area-name" class="secondary-text">Fetching area details...</div>
+    </div>
+  </div>
+
+  <!-- Tier 3: Live Voice Guidance HUD Panel -->
+  <div id="voice-hud" class="hud-card">
+    <div id="hud-icon"><i class="fa-solid fa-diamond-turn-right"></i></div>
+    <div id="hud-instruction">Drive towards destination</div>
+    <button id="voice-toggle-btn" class="hud-btn" title="Toggle Voice Alerts">
+      <i class="fa-solid fa-volume-high"></i>
+    </button>
+  </div>
+
+  <!-- Bottom Route Stats Panel -->
+  <div id="route-card" class="info-card">
+    <span id="route-mode-title">🚗 Route Summary</span>
+    <div id="route-stats">
+      <div id="route-dist">0 km</div>
+      <div id="route-time">0 mins</div>
+    </div>
+  </div>
+
+  <!-- Floating Map Controls -->
+  <div class="map-controls">
+    <button id="recenter-btn" class="control-btn" title="Recenter Location">📍</button>
+    <button id="compass-btn" class="control-btn" title="Reset North">🧭</button>
+  </div>
+
+  <!-- Leaflet & JS Dependencies -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
