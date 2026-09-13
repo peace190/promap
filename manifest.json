@@ -1,16 +1,25 @@
 {
-  "name": "Pro Navigation App",
+  "name": "Pro Global Map & Navigation",
   "short_name": "ProMap",
+  "id": "/",
+  "description": "Professional multi-mode local transport navigation for Car, Keke, Bus, Bike, Truck, and Walking.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#1e293b",
+  "background_color": "#ffffff",
   "theme_color": "#2563eb",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/854/854878.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/854/854878.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

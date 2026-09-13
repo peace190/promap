@@ -5,36 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pro Global Map & Navigation</title>
 
-  <!-- Leaflet & Plugin CSS -->
+  <!-- PWA Manifest & Theme Color -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#2563eb" />
+
+  <!-- Leaflet & Icons CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
-  <!-- PWA & Mobile Status Bar Configuration -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2563eb">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <!-- Top UI Stack Container -->
+  <div class="top-controls-container">
+    
+    <!-- PWA Top Banner -->
+    <div id="pwa-banner" class="pwa-banner">
+      <div class="pwa-info">
+        <div class="pwa-icon-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <div class="pwa-text-group">
+          <div class="pwa-title">ProMap Navigation</div>
+          <div class="pwa-subtitle">Install for full screen & offline access</div>
+        </div>
+      </div>
+      <div class="pwa-actions">
+        <button id="pwa-install-btn" class="pwa-install-btn">Install</button>
+        <button id="pwa-close-btn" class="pwa-close-btn">&times;</button>
+      </div>
+    </div>
+
+    <!-- Tier 1: Custom Search Bar -->
+    <div class="custom-search-container">
+      <div class="search-input-wrapper">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="custom-search-input" placeholder="Search street, city, state..." autocomplete="off">
+        <div id="search-spinner" class="search-spinner" style="display: none;"></div>
+      </div>
+      <ul id="search-results-list" class="search-results-list"></ul>
+    </div>
+
+    <!-- Tier 2: Transport Mode Selector -->
+    <div id="transport-selector" class="transport-card mode-selector">
+      <div class="mode-btn active" data-speed="40" data-mode="Car"><i class="fa-solid fa-car"></i><span>Car</span></div>
+      <div class="mode-btn" data-speed="25" data-mode="Keke"><i class="fa-solid fa-motorcycle"></i><span>Keke</span></div>
+      <div class="mode-btn" data-speed="30" data-mode="Bus"><i class="fa-solid fa-bus"></i><span>Bus</span></div>
+      <div class="mode-btn" data-speed="15" data-mode="Bike"><i class="fa-solid fa-bicycle"></i><span>Bike</span></div>
+      <div class="mode-btn" data-speed="20" data-mode="Truck"><i class="fa-solid fa-truck"></i><span>Truck</span></div>
+      <div class="mode-btn" data-speed="5" data-mode="Leg"><i class="fa-solid fa-person-walking"></i><span>Leg</span></div>
+    </div>
+
+    <!-- Live Voice Guidance HUD -->
+    <div id="voice-hud" class="hud-card">
+      <div id="hud-icon"><i class="fa-solid fa-diamond-turn-right"></i></div>
+      <div id="hud-instruction">Drive towards destination</div>
+      <button id="voice-toggle-btn" class="hud-btn"><i class="fa-solid fa-volume-high"></i></button>
+    </div>
+
+  </div>
+
   <!-- Map Canvas -->
   <div id="map"></div>
 
-  <!-- Tier 1: Top Transport Mode Selector -->
-  <div id="transport-selector" class="transport-card mode-selector">
-    <div class="mode-btn active" data-speed="40" data-mode="Car"><i class="fa-solid fa-car"></i><span>Car</span></div>
-    <div class="mode-btn" data-speed="25" data-mode="Keke"><i class="fa-solid fa-motorcycle"></i><span>Keke</span></div>
-    <div class="mode-btn" data-speed="30" data-mode="Bus"><i class="fa-solid fa-bus"></i><span>Bus</span></div>
-    <div class="mode-btn" data-speed="15" data-mode="Bike"><i class="fa-solid fa-bicycle"></i><span>Bike</span></div>
-    <div class="mode-btn" data-speed="20" data-mode="Truck"><i class="fa-solid fa-truck"></i><span>Truck</span></div>
-    <div class="mode-btn" data-speed="5" data-mode="Leg"><i class="fa-solid fa-person-walking"></i><span>Leg</span></div>
-  </div>
-
-  <!-- Tier 3: Location Card -->
+  <!-- Location Card -->
   <div id="address-card" class="location-card">
     <div class="loc-icon"><i class="fa-solid fa-location-dot"></i></div>
     <div class="loc-details">
@@ -43,16 +82,7 @@
     </div>
   </div>
 
-  <!-- Tier 3: Live Voice Guidance HUD Panel -->
-  <div id="voice-hud" class="hud-card">
-    <div id="hud-icon"><i class="fa-solid fa-diamond-turn-right"></i></div>
-    <div id="hud-instruction">Drive towards destination</div>
-    <button id="voice-toggle-btn" class="hud-btn" title="Toggle Voice Alerts">
-      <i class="fa-solid fa-volume-high"></i>
-    </button>
-  </div>
-
-  <!-- Bottom Route Stats Panel -->
+  <!-- Route Stats -->
   <div id="route-card" class="info-card">
     <span id="route-mode-title">🚗 Route Summary</span>
     <div id="route-stats">
@@ -61,17 +91,14 @@
     </div>
   </div>
 
-  <!-- Floating Map Controls -->
+  <!-- Floating Controls -->
   <div class="map-controls">
     <button id="recenter-btn" class="control-btn" title="Recenter Location">📍</button>
     <button id="compass-btn" class="control-btn" title="Reset North">🧭</button>
   </div>
 
-  <!-- Leaflet & JS Dependencies -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
   <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
   <script src="app.js"></script>
-
 </body>
 </html>

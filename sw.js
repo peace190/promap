@@ -1,22 +1,22 @@
-const CACHE_NAME = 'promap-v3';
+const CACHE_NAME = 'promap-v16';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './app.js',
+  './manifest.json',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
 ];
 
-// Install new assets
 self.addEventListener('install', (e) => {
-  self.skipWaiting(); // Force active activation
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
 });
 
-// Clear out old caches (like promap-v1) immediately
 self.addEventListener('activate', (e) => {
   e.waitUntil(
     caches.keys().then((keys) => {
@@ -31,7 +31,6 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-// Fetch assets from cache or network
 self.addEventListener('fetch', (e) => {
   e.respondWith(
     caches.match(e.request).then((res) => res || fetch(e.request))

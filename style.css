@@ -4,7 +4,7 @@
   padding: 0; 
 }
 
-body, html { 
+html, body { 
   width: 100%; 
   height: 100%; 
   overflow: hidden; 
@@ -14,22 +14,182 @@ body, html {
 #map { 
   width: 100vw; 
   height: 100vh; 
+  z-index: 1;
 }
 
-/* Transport Selector Card (Top Center) */
-.transport-card {
+/* Container for Top UI Elements (Prevents Overlap) */
+.top-controls-container {
   position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 1000;
-  background: #ffffff;
-  padding: 6px 12px;
-  border-radius: 30px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.22);
-  max-width: 90vw;
+  pointer-events: none;
+}
+
+.top-controls-container > * {
+  pointer-events: auto;
+}
+
+/* PWA TOP BANNER */
+.pwa-banner {
+  width: 100%;
+  height: 48px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pwa-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pwa-icon-box {
+  width: 30px;
+  height: 30px;
+  background-color: #2563eb;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.pwa-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.pwa-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.pwa-subtitle {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.pwa-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pwa-install-btn {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 5px 14px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.pwa-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* SEARCH BAR */
+.custom-search-container {
+  width: 90vw;
+  max-width: 380px;
+  position: relative;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  padding: 2px 16px;
+}
+
+.search-icon {
+  color: #64748b;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+#custom-search-input {
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: #1e293b;
+}
+
+.search-results-list {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  margin-top: 6px;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.search-results-list li {
+  padding: 10px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.search-results-list li:hover {
+  background-color: #f8fafc;
+}
+
+.search-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #cbd5e1;
+  border-top: 2px solid #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* TRANSPORT MODE SELECTOR */
+.transport-card {
+  background: #ffffff;
+  padding: 6px 10px;
+  border-radius: 25px;
+  display: flex;
+  gap: 6px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  width: 90vw;
+  max-width: 380px;
   overflow-x: auto;
 }
 
@@ -37,43 +197,20 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 11px;
+  font-size: 10px;
   color: #64748b;
   cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 20px;
+  padding: 5px 10px;
+  border-radius: 16px;
+  flex: 1;
   transition: all 0.2s ease;
 }
 
-.mode-btn i { font-size: 15px; margin-bottom: 2px; }
+.mode-btn i { font-size: 14px; margin-bottom: 2px; }
 .mode-btn.active, .mode-btn:hover { background: #2563eb; color: #ffffff; }
 
-/* Location Panel (Top Left, Below Mode Bar) */
-.location-card {
-  position: absolute;
-  top: 72px;
-  left: 12px;
-  z-index: 1000;
-  background: #ffffff;
-  padding: 10px 14px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.18);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 280px;
-}
-
-.loc-icon { font-size: 18px; color: #ef4444; }
-.primary-text { font-size: 13px; font-weight: 700; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.secondary-text { font-size: 11px; color: #64748b; margin-top: 1px; }
-
-/* Voice Guidance HUD (Top Right, Below Mode Bar) */
+/* VOICE HUD */
 .hud-card {
-  position: absolute;
-  top: 72px;
-  right: 12px;
-  z-index: 1000;
   background: #1e293b;
   color: #ffffff;
   padding: 10px 14px;
@@ -82,19 +219,40 @@ body, html {
   display: none;
   align-items: center;
   gap: 10px;
-  max-width: 280px;
+  width: 90vw;
+  max-width: 380px;
 }
 
-#hud-icon { font-size: 20px; color: #38bdf8; }
+#hud-icon { font-size: 18px; color: #38bdf8; }
 #hud-instruction { font-size: 12px; font-weight: 600; flex: 1; }
 .hud-btn { background: none; border: none; color: #ffffff; font-size: 16px; cursor: pointer; }
 
-/* Route Summary Panel (Bottom Left) */
+/* LOCATION CARD */
+.location-card {
+  position: absolute;
+  top: 190px;
+  left: 12px;
+  z-index: 900;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 220px;
+}
+
+.loc-icon { font-size: 16px; color: #ef4444; }
+.primary-text { font-size: 12px; font-weight: 700; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.secondary-text { font-size: 10px; color: #64748b; margin-top: 1px; }
+
+/* BOTTOM PANELS */
 .info-card {
   position: absolute;
-  bottom: 25px;
+  bottom: 20px;
   left: 12px;
-  z-index: 1000;
+  z-index: 1000 !important;
   background: #ffffff;
   padding: 12px 18px;
   border-radius: 12px;
@@ -107,32 +265,7 @@ body, html {
 #route-dist { color: #2563eb; font-size: 18px; }
 #route-time { color: #059669; font-size: 18px; }
 
-/* Map Floating Control Buttons (Bottom Right) */
-.map-controls {
-  position: absolute;
-  bottom: 25px;
-  right: 12px;
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.control-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #ffffff;
-  border: none;
-  font-size: 18px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Pulsing GPS Indicator */
+/* GPS MARKER PULSE */
 .user-location-marker {
   width: 18px;
   height: 18px;
@@ -160,62 +293,66 @@ body, html {
   100% { transform: scale(1.6); opacity: 0; }
 }
 
-/* Leaflet Overrides */
-.leaflet-control-geocoder {
-  border-radius: 8px !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+/* ==========================================
+   FLOATING ACTION BUTTONS (SHIFTED UP)
+   ========================================== */
+.map-controls {
+  position: absolute;
+  bottom: 80px; /* Shifted up to clear Netlify badge */
+  right: 14px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  font-size: 18px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ==========================================
-   UI LAYOUT & OVERLAP PREVENTION (TIERED)
+   LEAFLET CONTROLS (ZOOM & LAYERS)
    ========================================== */
 
-/* Tier 1: Top Mode Bar (Centered) */
-.mode-selector {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  max-width: calc(100% - 120px); /* Leaves room for zoom & layer buttons */
+/* Zoom (+ / -) Control Moved to Bottom-Left */
+.leaflet-bottom.leaflet-left {
+  bottom: 80px !important; /* Shifted up to align cleanly above attribution */
+  left: 14px !important;
+  z-index: 900 !important;
 }
 
-/* Tier 2: Layer Toggle Control (Pinned Far Right) */
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  width: 38px !important;
+  height: 38px !important;
+  line-height: 38px !important;
+  font-size: 18px !important;
+  color: #1e293b !important;
+  background-color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Layer Switcher (Top-Right) */
 .leaflet-top.leaflet-right {
-  top: 10px !important;
-  right: 10px !important;
-  z-index: 1001;
-}
-
-/* Tier 3: Location Card & Voice HUD (Moved to Row Below Mode Bar) */
-#address-card {
-  position: absolute;
-  top: 75px;
-  left: 12px;
-  z-index: 999;
-}
-
-#voice-hud {
-  position: absolute;
-  top: 75px;
-  right: 12px;
-  z-index: 999;
-  max-width: 45vw; /* Keeps it compact on mobile screens */
-}
-
-
-.install-pwa-btn {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2000;
-  background-color: #2563eb;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 25px;
-  font-weight: bold;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  cursor: pointer;
+  top: 130px !important; /* Positioned right below top controls stack */
+  right: 14px !important;
+  z-index: 900 !important;
 }
